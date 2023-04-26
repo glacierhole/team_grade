@@ -146,10 +146,16 @@ if uploaded_file is not None:
     bench_df = bench_df.drop_duplicates(subset = ["Player Name", "Projected PPG"], keep=False)
     
     ### Calculate Total Roster Adjusted PPG ###
-    qb_weight = (s_qbs+super_flex)/(s_qbs+s_rbs+s_wrs+s_tes+s_flex+super_flex)
-    rb_weight = (s_rbs+s_flex+super_flex)/(s_qbs+s_rbs+s_wrs+s_tes+s_flex+super_flex)
-    wr_weight = (s_wrs+s_flex+super_flex)/(s_qbs+s_rbs+s_wrs+s_tes+s_flex+super_flex)
-    te_weight = (s_tes+s_flex+super_flex)/(s_qbs+s_rbs+s_wrs+s_tes+s_flex+super_flex)
+    if (s_qbs+s_rbs+s_wrs+s_tes+s_flex+super_flex) == 0:
+        qb_weight = 0
+        rb_weight = 0
+        wr_weight = 0
+        te_weight = 0        
+    else:
+        qb_weight = (s_qbs+super_flex)/(s_qbs+s_rbs+s_wrs+s_tes+s_flex+super_flex)
+        rb_weight = (s_rbs+s_flex+super_flex)/(s_qbs+s_rbs+s_wrs+s_tes+s_flex+super_flex)
+        wr_weight = (s_wrs+s_flex+super_flex)/(s_qbs+s_rbs+s_wrs+s_tes+s_flex+super_flex)
+        te_weight = (s_tes+s_flex+super_flex)/(s_qbs+s_rbs+s_wrs+s_tes+s_flex+super_flex)
 
     # Create df with those weights
     all_weights = pd.DataFrame(
@@ -218,7 +224,7 @@ st.sidebar.markdown("1) Go to the rankings page you want to use. All pages are l
 st.sidebar.markdown("2) Click the button that says 'CSV' directly above the search bar. That will download the rankings to the 'Downloads' folder on your computer.")
 st.sidebar.markdown("3) Click 'Browse files' on this page.")
 st.sidebar.markdown("4) Find the rankings you just downloaded and open them.")
-st.sidebar.markdown("5) Input how many players you drafted at each position, along with the players you drafted.")
+st.sidebar.markdown("5) Input how many players you drafted at each position, along with the players you drafted. You need to do this before moving on or else it will throw an error for dividing by 0. Also don't worry about going in order. The system will sort best to worst on the backend.")
 st.sidebar.markdown("6) Input the number of players you have to start at each position every week.")
 st.sidebar.markdown("7) See how good your team is! Your optimal lineup PPG is shown under 'Starting Lineup Projected PPG'.")
 st.sidebar.markdown("8) As mentioned above, the strength of your bench is also important. You can try to maximize either metric, but I'd try and get as high a value for 'Total Roster Adjusted PPG' as possible.")
