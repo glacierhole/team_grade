@@ -209,6 +209,7 @@ if uploaded_file is not None:
     st.write("### Total Roster Adjusted PPG: ", (round(adj_bench_weights_df["Weighted PPG"].sum(),2))+(round(final_starters["Projected PPG"].sum(),2)))
     
 ### Sidebar ###
+st.sidebar.image('ffa_red.png', use_column_width=True)
 st.sidebar.markdown(" ## About This App:")
 st.sidebar.markdown("This app is designed to help you when mock drafting. Input your teams into this app after you're finished a mock draft and see what strategies result in the best teams! It's of course great to try and get the best starting lineup...but bench matters too! Ideally you're trying to maximize 'Total Roster Adjusted PPG'. This is a metric that also assigns some value to your bench, since having a strong bench is very important.")
 
